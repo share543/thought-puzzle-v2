@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>思想拼圖 · Idea Puzzle</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ======== 側邊欄導覽 ======== -->
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-logo">🧩</div>
+    <div class="brand-text">
+      <h1>思想拼圖</h1>
+      <p>Idea Puzzle</p>
+    </div>
+  </div>
+  <nav class="nav">
+    <button class="nav-item" data-view="inbox" aria-label="收件匣">
+      <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14l-5-5 1.4-1.4L10 14.2l7.6-7.6L19 8l-9 9z"/></svg>
+      <span>收件匣</span>
+    </button>
+    <button class="nav-item" data-view="library" aria-label="片段庫">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h10v2H4z"/></svg>
+      <span>片段庫</span>
+      <span class="nav-badge" id="nav-count">0</span>
+    </button>
+    <button class="nav-item" data-view="puzzle" aria-label="拼圖">
+      <svg viewBox="0 0 24 24"><path d="M20.5 11h-2.7a2.5 2.5 0 0 1-.6-4.9 2.5 2.5 0 0 0-4.9.6V11a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1.1a2.6 2.6 0 0 1-5-1 2.5 2.5 0 0 0-4.4 1.6V11a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V7"/></svg>
+      <span>拼圖工作台</span>
+    </button>
+    <button class="nav-item" data-view="outputs" aria-label="成果">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+      <span>成果</span>
+    </button>
+    <button class="nav-item" data-view="settings" aria-label="設定">
+      <svg viewBox="0 0 24 24"><path d="M19.1 12.9a7.8 7.8 0 0 0 .1-1 7.8 7.8 0 0 0-.1-1l2.1-1.6a.5.5 0 0 0 .1-.6l-2-3.5a.5.5 0 0 0-.6-.2l-2.5 1a7.3 7.3 0 0 0-1.7-1l-.4-2.6a.5.5 0 0 0-.5-.4h-4a.5.5 0 0 0-.5.4l-.4 2.6a7.3 7.3 0 0 0-1.7 1l-2.5-1a.5.5 0 0 0-.6.2l-2 3.5a.5.5 0 0 0 .1.6L4.9 11a7.8 7.8 0 0 0-.1 1 7.8 7.8 0 0 0 .1 1l-2.1 1.6a.5.5 0 0 0-.1.6l2 3.5a.5.5 0 0 0 .6.2l2.5-1a7.3 7.3 0 0 0 1.7 1l.4 2.6a.5.5 0 0 0 .5.4h4a.5.5 0 0 0 .5-.4l.4-2.6a7.3 7.3 0 0 0 1.7-1l2.5 1a.5.5 0 0 0 .6-.2l2-3.5a.5.5 0 0 0-.1-.6l-2.1-1.6zM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7z"/></svg>
+      <span>設定</span>
+    </button>
+  </nav>
+  <div class="sidebar-foot" id="sidebar-foot">
+    <div class="store-status" id="store-status">
+      <span class="dot"></span><span id="store-status-text">本機儲存</span>
+    </div>
+    <button class="btn btn-ghost btn-block" data-view="settings" data-go-settings>⚙️ 設定 AI</button>
+  </div>
+</aside>
+
+<!-- ======== 主內容 ======== -->
+<main class="main">
+
+  <!-- ── 收件匣 ── -->
+  <section class="view" id="view-inbox">
+    <header class="view-head">
+      <div>
+        <h2>收件匣 <span class="muted">Inbox</span></h2>
+        <p class="sub">想到什麼就丟進來，一句話也可以。</p>
+      </div>
+    </header>
+
+    <div class="capture-card">
+      <div class="capture-row">
+        <textarea id="capture-text" rows="2" placeholder="捕捉一個想法片段… 貼上網址會自動變成連結片段"></textarea>
+        <div class="capture-actions">
+          <button class="btn btn-icon" id="btn-mic" title="語音轉文字" aria-label="錄音">
+            <svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/></svg>
+          </button>
+          <input type="file" id="file-image" accept="image/*" hidden>
+          <button class="btn btn-icon" id="btn-image" title="上傳圖片/截圖" aria-label="上傳圖片">
+            <svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 11a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM19 19H5l4-4 3 3 3-3 4 4z"/></svg>
+          </button>
+          <input type="file" id="file-pdf" accept=".pdf" hidden>
+          <button class="btn btn-icon" id="btn-pdf" title="上傳 PDF 檔案" aria-label="上傳 PDF">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM8 18v-4h1.5v1.5h1V14H12v4h-1.5v-1.5h-1V18H8zm5-5h2.5a1.5 1.5 0 0 1 0 3H14.5v2H13v-5zm-1 4.5H16v-1h-2.5V14H16v-1h-3v4.5z"/></svg>
+          </button>
+          <button class="btn btn-primary" id="capture-send">加入 🧩</button>
+        </div>
+      </div>
+      <div class="capture-hint" id="rec-hint" hidden>● 錄音中… 再按一次停止並轉錄</div>
+    </div>
+
+    <h3 class="section-title">最近片段</h3>
+    <div class="feed" id="inbox-feed"></div>
+  </section>
+
+  <!-- ── 片段庫 ── -->
+  <section class="view" id="view-library">
+    <header class="view-head">
+      <div>
+        <h2>片段庫 <span class="muted">Library</span></h2>
+        <p class="sub">所有片段，可搜尋、篩選、編輯。</p>
+      </div>
+      <button class="btn btn-outline" id="btn-new-fragment">＋ 新片段</button>
+    </header>
+    <div class="toolbar">
+      <input type="search" id="lib-search" class="search" placeholder="搜尋片段…">
+      <div class="chips" id="lib-tags"></div>
+    </div>
+    <div class="lib-list" id="lib-list"></div>
+  </section>
+
+  <!-- ── 拼圖工作台 ── -->
+  <section class="view" id="view-puzzle">
+    <header class="view-head">
+      <div>
+        <h2>拼圖工作台 <span class="muted">Puzzle</span></h2>
+        <p class="sub">把散落的片段，拼成完整的想法與行動。</p>
+      </div>
+    </header>
+
+    <!-- 步驟 1：選擇片段與成果型態 -->
+    <div class="pz-step" id="pz-step-select">
+      <div class="step-card">
+        <div class="step-label"><span class="step-no">1</span> 選擇要拼的片段</div>
+        <div class="pz-select-head">
+          <label class="check"><input type="checkbox" id="pz-check-all"><span>全選</span></label>
+          <span class="muted" id="pz-select-count">已選 0 / 0</span>
+        </div>
+        <div class="pz-select-list" id="pz-select-list"></div>
+      </div>
+      <div class="step-card">
+        <div class="step-label"><span class="step-no">2</span> 選擇想要的成果型態</div>
+        <div class="type-grid" id="pz-type-grid">
+          <button class="type-opt" data-type="action">📋 行動計畫<br><small>待辦清單</small></button>
+          <button class="type-opt" data-type="proposal">💼 提案/企劃<br><small>企劃書</small></button>
+          <button class="type-opt" data-type="article">✍️ 文章/簡報<br><small>內容創作</small></button>
+          <button class="type-opt" data-type="report">📚 研究報告<br><small>知識彙整</small></button>
+          <button class="type-opt" data-type="roadmap">🗺️ 路線圖<br><small>發展藍圖</small></button>
+          <button class="type-opt" data-type="auto">✨ 依內容決定<br><small>不固定</small></button>
+        </div>
+      </div>
+      <div class="pz-cta">
+        <button class="btn btn-primary btn-lg" id="pz-btn-cluster">開始分群 🧩</button>
+      </div>
+    </div>
+
+    <!-- 步驟 2：分群確認 -->
+    <div class="pz-step" id="pz-step-groups" hidden>
+      <div class="step-card">
+        <div class="step-label"><span class="step-no">2</span> AI 分群結果 — 確認後整合 <span class="muted" id="pz-group-summary"></span></div>
+        <p class="sub">每個片段右上角可切換所屬群組；調整好後按「確認並整合」。</p>
+        <div class="groups-board" id="pz-groups"></div>
+      </div>
+      <div class="pz-cta">
+        <button class="btn btn-outline" id="pz-btn-resync">🔄 重新分群</button>
+        <button class="btn btn-primary btn-lg" id="pz-btn-integrate">確認並整合 ✨</button>
+      </div>
+    </div>
+
+    <!-- 步驟 3：成果 -->
+    <div class="pz-step" id="pz-step-result" hidden>
+      <div class="step-card result-card">
+        <div class="result-head">
+          <div>
+            <div class="step-label"><span class="step-no">3</span> 整合成果</div>
+            <p class="sub" id="pz-result-meta"></p>
+          </div>
+          <div class="result-actions">
+            <button class="btn btn-outline" id="pz-btn-export-md">匯出 Markdown</button>
+            <button class="btn btn-outline" id="pz-btn-export-txt">匯出文字</button>
+            <button class="btn btn-outline" id="pz-btn-export-pdf">匯出 PDF</button>
+            <button class="btn btn-ghost" id="pz-btn-again">再次拼圖</button>
+          </div>
+        </div>
+        <article class="prose" id="pz-result-body"></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 成果 ── -->
+  <section class="view" id="view-outputs">
+    <header class="view-head">
+      <div>
+        <h2>成果 <span class="muted">Outputs</span></h2>
+        <p class="sub">歷史整合成果，隨時回來查看或匯出。</p>
+      </div>
+    </header>
+    <div class="out-list" id="out-list"></div>
+  </section>
+
+  <!-- ── 設定 ── -->
+  <section class="view" id="view-settings">
+    <header class="view-head">
+      <div>
+        <h2>設定 <span class="muted">Settings</span></h2>
+        <p class="sub">AI 金鑰、儲存與匯出。</p>
+      </div>
+    </header>
+
+    <div class="step-card">
+      <div class="step-label">🤖 AI 服務</div>
+      <p class="sub">免費額度即可。金鑰只存在你的瀏覽器（localStorage），<b>不會</b>被上傳到任何伺服器。</p>
+      <div class="form-grid">
+        <label>Gemini API 金鑰（主要）
+          <input type="password" id="set-gemini-key" placeholder="AIza…" autocomplete="off">
+        </label>
+        <label>Gemini 模型（分群/整合）
+          <select id="set-gemini-model">
+            <option value="gemini-2.5-flash">gemini-2.5-flash（推薦）</option>
+            <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite（省額度）</option>
+            <option value="gemini-2.0-flash">gemini-2.0-flash</option>
+          </select>
+        </label>
+        <label>Groq API 金鑰（語音轉文字，選填）
+          <input type="password" id="set-groq-key" placeholder="gsk_…（未填則用 Gemini 轉錄）" autocomplete="off">
+        </label>
+        <label>Groq 語音模型
+          <select id="set-groq-model">
+            <option value="whisper-large-v3-turbo">whisper-large-v3-turbo</option>
+            <option value="whisper-large-v3">whisper-large-v3</option>
+          </select>
+        </label>
+      </div>
+      <div class="pz-cta">
+        <button class="btn btn-primary" id="btn-save-settings">儲存設定</button>
+        <a class="btn btn-ghost" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">申請免費 Gemini 金鑰 ↗</a>
+      </div>
+      <div class="notice" id="ai-status"></div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-label">💾 儲存與匯出</div>
+      <p class="sub">資料預設存於瀏覽器 IndexedDB（可離線）。可連線本機資料夾，將片段同步為 Markdown 檔案；亦可匯出/匯入備份。</p>
+      <div class="btn-row">
+        <button class="btn btn-outline" id="btn-connect-folder">📁 連線資料夾</button>
+        <button class="btn btn-outline" id="btn-export">⬇️ 匯出備份 (JSON)</button>
+        <button class="btn btn-outline" id="btn-import">⬆️ 匯入備份</button>
+        <input type="file" id="file-import" accept=".json" hidden>
+      </div>
+      <div class="notice" id="folder-status"></div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-label">🎨 外觀</div>
+      <div class="btn-row">
+        <button class="btn btn-outline" id="btn-theme-dark">🌙 深色</button>
+        <button class="btn btn-outline" id="btn-theme-light">☀️ 淺色</button>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-label">📊 統計</div>
+      <div class="stats" id="stat-box">
+        <div class="stat"><b id="stat-fragments">0</b><span>片段</span></div>
+        <div class="stat"><b id="stat-images">0</b><span>圖片</span></div>
+        <div class="stat"><b id="stat-voices">0</b><span>語音</span></div>
+        <div class="stat"><b id="stat-outputs">0</b><span>成果</span></div>
+      </div>
+      <button class="btn btn-danger-ghost" id="btn-wipe">清除所有資料</button>
+    </div>
+  </section>
+</main>
+
+<!-- ======== 忙碌覆蓋 ======== -->
+<div class="busy-overlay" id="busy" hidden>
+  <div class="busy-box">
+    <div class="puzzle-anim">🧩</div>
+    <div class="busy-title" id="busy-title">正在拼圖…</div>
+    <div class="busy-sub" id="busy-sub"></div>
+  </div>
+</div>
+
+<!-- ======== 彈窗 ======== -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-panel">
+    <div class="modal-head">
+      <h3 id="modal-title">標題</h3>
+      <button class="btn btn-icon" data-close-modal aria-label="關閉">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- ======== Toast ======== -->
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<!-- 依賴（CDN） -->
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';</script>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

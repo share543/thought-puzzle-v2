@@ -1,0 +1,14 @@
+# 依賴與建置
+node_modules/
+*.log
+
+# 系統檔案
+.DS_Store
+Thumbs.db
+
+# 編輯器
+.idea/
+.vscode/
+
+# 執行期資料（本機資料夾同步用）
+data/
