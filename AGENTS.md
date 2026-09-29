@@ -31,7 +31,7 @@
 2. **沒有建置步驟。** 不用 bundler、不用 npm 相依、不要產生 dist。改完直接開瀏覽器就能跑。
 3. **金鑰永不進版控。** Gemini／Groq 金鑰由使用者在「設定」畫面自行貼上，存於 **IndexedDB**（DB `idea-puzzle` 的 `meta` store，key `settings`）。程式中任何地方都不得寫死金鑰。
 4. **匯出備份必須剝除金鑰。** `store.js` 的 `exportBundle()` 用 `delete safeSettings.geminiKey` / `groqKey` 拿掉金鑰 —— 這是安全不變式，改動備份格式時不可移除。
-   > ⚠️ 這裡指的是「匯出檔」；`settings` 本身仍存於 IndexedDB（`getMeta`/`setMeta`）。`README.md` 說金鑰存於 localStorage 是**錯的**（已 drift，尚未修）。
+   > 這裡指的是「匯出檔」；`settings` 本身存於 IndexedDB（`getMeta`/`setMeta`）。金鑰由使用者自己貼上、只留在自己的瀏覽器本機儲存，不經任何伺服器。`README.md` 原本把儲存位置寫成 localStorage，已於 2026-09-29 修正為「瀏覽器本機儲存（IndexedDB）」。
 5. **模擬模式必須永遠可用。** 沒填金鑰時要走 `js/ai.js` 的模擬分群/模擬成果，讓使用者能體驗完整流程；任何改動都不能讓「未設定金鑰」這條路徑當掉或卡住。
 6. **UI 與輸出以繁體中文為主。**
 7. **CDN 依賴是刻意的，不要「順手離線化」。** `index.html` 明確載入 `marked@12.0.2`、`dompurify@3.1.6`、`pdfjs-dist@3.11.174`（jsdelivr）與 Google Fonts。版本有鎖。這是為了 GitHub Pages 上的零建置部署，與其他專案（如 `novel-animation` 要求零外部資源）的規則**相反**；要改動請先問。
